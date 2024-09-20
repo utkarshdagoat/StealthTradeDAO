@@ -1,0 +1,39 @@
+{
+  "name": "oracle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --loader ts-node/esm --experimental-vm-modules --experimental-wasm-threads --experimental-wasm-modules --es-module-specifier-resolution=node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "chain": "workspace:*",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "o1js": "1.6.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.5",
+    "nodemon": "^3.1.4",
+    "typescript": "^5.6.2"
+  },
+  "peerDependencies": {
+    "@proto-kit/common": "*",
+    "@proto-kit/library": "*",
+    "@proto-kit/module": "*",
+    "@proto-kit/protocol": "*",
+    "@proto-kit/sdk": "*",
+    "@proto-kit/sequencer": "*",
+    "tsyringe": "^4.7.0"
+  }
+}
