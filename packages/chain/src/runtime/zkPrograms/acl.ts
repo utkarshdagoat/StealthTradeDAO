@@ -9,7 +9,7 @@ export async function canAccess(
 ): Promise<Field> {
     const hashedKey = Poseidon.hash(key.toFields());
     const [computedRoot, computedKey] = witness.computeRootAndKeyV2(
-        hashedKey
+       Bool(true).toField() 
     );
     assert(computedKey.equals(hashedKey), "Invalid key");
     return computedRoot;
@@ -20,7 +20,7 @@ export const canAccessProgram = ZkProgram({
     publicOutput: Field,
 
     methods: {
-        canClaim: {
+        canAccess: {
             privateInputs: [MerkleMapWitness, PublicKey],
             method: canAccess,
         },
