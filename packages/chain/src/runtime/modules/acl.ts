@@ -10,7 +10,6 @@ export class OrderBookAccessControlRuntime extends RuntimeModule<unknown> {
 
     @state() public orderIdToCommitment = StateMap.from<UInt64, Field>(UInt64, Field)
 
-
     @runtimeMethod()
     public async setOrderCommitment(orderId: UInt64, commitment: Field) {
         await this.orderIdToCommitment.set(orderId, commitment)

@@ -3,15 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --loader ts-node/esm --experimental-vm-modules --experimental-wasm-threads --experimental-wasm-modules --es-module-specifier-resolution=node api/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chain": "workspace:*",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "o1js": "1.6.0",
     "sorted-btree": "^1.8.1",
     "ts-node": "^10.9.2"
   },

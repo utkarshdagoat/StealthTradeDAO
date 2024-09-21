@@ -133,3 +133,4 @@ export class MatchedOrder {
         this.bidOrAsk = bidOrAsk;
     }
 }
+

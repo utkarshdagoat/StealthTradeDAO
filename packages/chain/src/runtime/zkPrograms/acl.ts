@@ -63,4 +63,4 @@ export async function canAccessAllTheOrders(
         orderId: orderId
     });
 };
-export class CanAccessProof extends ZkProgram.Proof(canAccessProgram) { }
+export class CanAccessProof extends ZkProgram.Proof(canAccessProgram){ }

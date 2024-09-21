@@ -5,14 +5,14 @@ interface ComponentProps {
     sellOrders: number[]
 }
 
-export default function Component(props: ComponentProps) {
+export default function OrderBook(props: ComponentProps) {
   const maxAmount = Math.max(...props.buyOrders, ...props.sellOrders)
-  const maxHeight = 400 
+  const maxHeight = 300 
 
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground">
+    <div className="flex w-[80%] flex-col h-screen bg-background text-foreground justify-center align-center">
       <h2 className="text-3xl font-bold p-4 text-center">Order Book</h2>
-      <div className="flex-grow flex">
+      <div className=" flex">
         <div className="flex-1 flex flex-col p-4">
           <h3 className="text-2xl font-semibold mb-4 text-green-500 text-center">Buy Orders</h3>
           <div className="flex-grow flex items-end space-x-1" style={{ height: `${maxHeight}px` }}>
@@ -23,7 +23,7 @@ export default function Component(props: ComponentProps) {
                   style={{ height: `${(amount / maxAmount) * maxHeight}px` }}
                   aria-label={`Buy order: ${amount}`}
                 >
-                  <div className="h-full w-full opacity-0 hover:opacity-100 bg-black bg-opacity-50 flex items-center justify-center text-white text-xs transition-opacity duration-300">
+                  <div className=" w-full opacity-0 hover:opacity-100 bg-black bg-opacity-50 flex items-center justify-center text-white text-xs transition-opacity duration-300">
                   </div>
                 </div>
               </div>
