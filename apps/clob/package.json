@@ -10,6 +10,25 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "sorted-btree": "^1.8.1",
     "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.5",
+    "cors": "^2.8.5",
+    "typescript": "^5.6.2"
+  },
+  "peerDependencies": {
+    "@proto-kit/common": "*",
+    "@proto-kit/library": "*",
+    "@proto-kit/module": "*",
+    "@proto-kit/protocol": "*",
+    "@proto-kit/sdk": "*",
+    "@proto-kit/sequencer": "*",
+    "tsyringe": "^4.7.0"
   }
 }

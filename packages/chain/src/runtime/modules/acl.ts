@@ -1,6 +1,6 @@
 import { UInt64 } from "@proto-kit/library";
 import { runtimeMethod, RuntimeModule, state } from "@proto-kit/module";
-import { StateMap,assert } from "@proto-kit/protocol";
+import { StateMap, assert } from "@proto-kit/protocol";
 import { Field } from "o1js";
 import { CanAccessProof } from "../zkPrograms/acl";
 
@@ -21,7 +21,7 @@ export class OrderBookAccessControlRuntime extends RuntimeModule<unknown> {
         proof.verify()
         const commitment = await this.orderIdToCommitment.get(orderId)
         assert(
-            commitment.value.equals(proof.publicOutput),
+            commitment.value.equals(proof.publicOutput.root),
             "Invalid Proof for the order Id"
         )
     }
