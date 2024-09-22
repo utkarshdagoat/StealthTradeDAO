@@ -15,7 +15,6 @@ import { useState } from "react";
 
 
 export default function Home() {
-    const [orderParams, setOrderParams] = useState<OrderCreateParams | null>(null)
     const [proofString, setProofString] = useState("")
     const [outputString, setOutputString] = useState("")
 
@@ -24,6 +23,9 @@ export default function Home() {
             <OrderBook
                 buyOrders={[1, 2, 3, 4, 5]}
                 sellOrders={[5, 4, 3, 2, 1]}
+                proofString={proofString}
+                outputString={outputString}
+
             />
             <Dialog>
                 <DialogTrigger><Button> See Your Orders</Button></DialogTrigger>

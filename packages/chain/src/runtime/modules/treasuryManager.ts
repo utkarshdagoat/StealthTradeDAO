@@ -12,6 +12,11 @@ interface TreasuryManagerConfig {
 
 export class TreasuryManager extends RuntimeModule<TreasuryManagerConfig> {
 
+    // constructor(
+    //     @inject("Balances") public balances: Balances
+    // ) {
+    //     super()
+    // }
 
     @runtimeMethod()
     public async setTreasuryAddress(treasuryAddress: PublicKey) {
@@ -34,7 +39,7 @@ export class TreasuryManager extends RuntimeModule<TreasuryManagerConfig> {
     // }
 
     @runtimeMethod()
-    public async trasnferFromTreasury(tokenId: TokenId, amount: UInt64,to: PublicKey) {
+    public async trasnferFromTreasury(tokenId: TokenId, amount: UInt64, to: PublicKey) {
         // await this.balances.transfer(
         //     tokenId,
         //     this.config.treasuryAddress,

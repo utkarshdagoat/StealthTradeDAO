@@ -5,12 +5,23 @@ import { BidOrAsk, Order, OrderType } from "./type";
 import { Client, useClientStore } from "./client";
 import axios from "axios"
 import { Field, MerkleMap, Poseidon, PublicKey, UInt64 } from "o1js";
+import { UInt64 as pUInt } from "@proto-kit/library"
 import { CREATE_ORDER } from "./endpoint";
 import { AccessControlOutput, canAccessProgram, CanAccessProof } from "chain"
 import { downloadFile } from "./download";
 import { useWalletStore } from "./wallet";
 import { useCallback } from "react";
 
+
+async function mockProof(
+    publicOutput: AccessControlOutput
+): Promise<CanAccessProof> {
+    console.log("generating mock proof");
+    console.time("mockProof");
+    const proof = await CanAccessProof.dummy(undefined, publicOutput, 0);
+    console.timeEnd("mockProof");
+    return proof;
+}
 export interface OrderCreateParams {
     amount: number,
     token: TokenId,
@@ -45,17 +56,16 @@ export const useOrderStore = create<
         async createOrder(params: OrderCreateParams, client: Client, wallet: string) {
             const Treasury = client.runtime.resolve("TreasuryManager")
             const balances = client.runtime.resolve("Balances")
+            const acl = client.runtime.resolve("OrderBookAccessControlRuntime")
 
-
-            //Transfer Funds
+            // // //Transfer Funds
             const walletAddress = PublicKey.fromBase58(wallet)
-            const treasuryAddress = Treasury.config.treasuryAddress
-            const tx = await client.transaction(walletAddress, async () => {
-                await balances.transferSigned(params.token, walletAddress, treasuryAddress, Balance.from(params.amount))
-            }, { nonce: 0 })
-            await tx.sign()
-            await tx.send()
-            isPendingTransaction(tx.transaction)
+            // const treasuryAddress = Treasury.config.treasuryAddress
+            // const tx = await client.transaction(walletAddress, async () => {
+            //     await balances.transferSigned(params.token, walletAddress, treasuryAddress, Balance.from(params.amount))
+            // }, { nonce: 0 })
+            // await tx.sign()
+            // await tx.send()
 
 
             const res = await axios.post(CREATE_ORDER, {
@@ -71,14 +81,16 @@ export const useOrderStore = create<
                 withCredentials: true
             })
             const data = res.data
+            console.log(data)
 
-            // generate proof of the order
-            await canAccessProgram.compile()
+            // // generate proof of the order
+            // await canAccessProgram.compile()
+            // console.log("Compiled")
             const map = new MerkleMap()
             const hashedKey = Poseidon.hash(walletAddress.toFields())
             const orderId = UInt64.from(data.id)
-
-            if (params.proof && params.publicOuput) {
+            let computedProof: CanAccessProof
+            if (params.proof && params.proof !== "" && params.publicOuput && params.publicOuput !== "") {
                 const ouput = AccessControlOutput.fromJSON(JSON.parse(params.publicOuput))
                 const reconstructed = await CanAccessProof.fromJSON<any>({
                     maxProofsVerified: 0,
@@ -92,25 +104,41 @@ export const useOrderStore = create<
                 ])
                 map.set(hashedKey, hashedValue)
                 const wintness = map.getWitness(hashedKey)
-                const newProof = await canAccessProgram.canAccessAllTheOrders(
+                computedProof = await canAccessProgram.canAccessAllTheOrders(
                     wintness,
                     walletAddress,
                     orderId,
                     reconstructed
                 )
-                downloadFile(newProof.toJSON(), `${orderId}-proof.json`)
+                downloadFile(computedProof.toJSON(), `${orderId}-proof.json`)
             } else {
                 const hashedValue = Poseidon.hash(orderId.toFields())
                 map.set(hashedKey, hashedValue)
                 const witness = map.getWitness(hashedKey)
-                const proof = await canAccessProgram.canAccess(
-                    witness,
-                    walletAddress,
-                    orderId
-                )
-                downloadFile(proof.toJSON(), `${orderId}-proof.json`)
+                console.log(witness)
+                computedProof = await mockProof({
+                    root: map.getRoot(),
+                    orderId: orderId,
+                })
+                // computedProof = await canAccessProgram.canAccess(
+                //     witness,
+                //     walletAddress,
+                //     orderId
+                // )
+
+                downloadFile(computedProof.toJSON(), `${orderId}-proof.json`)
             }
-            return tx.transaction
+            const pOrderId = pUInt.from(data.id)
+            const tx2 = await client.transaction(walletAddress, async () => {
+                await acl.setOrderCommitment(pOrderId, computedProof.publicOutput.root)
+            }, { nonce: 1 })
+            await tx2.sign()
+            console.log(tx2)
+
+            await tx2.send()
+            // await tx.send()
+            isPendingTransaction(tx2.transaction)
+            return tx2.transaction
         }
     })),
 );

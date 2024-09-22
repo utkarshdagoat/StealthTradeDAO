@@ -8,8 +8,8 @@ import { TreasuryManager } from "./modules/treasuryManager";
 
 export const modules = VanillaRuntimeModules.with({
   Balances,
+  TreasuryManager,
   OrderBookAccessControlRuntime,
-  TreasuryManager
 });
 
 export const config: ModulesConfig<typeof modules> = {

@@ -40,7 +40,7 @@ export class OrderBook {
 
     async addOrder(order: Order, timestamp: number): Promise<this> {
         order.timestamp = timestamp;
-
+        this.ordersLength++;
         const isMarketOrder = order.orderType === OrderType.Market;
         const bidOrAsk = order.bidOrAsk;
         const price = order.price!;

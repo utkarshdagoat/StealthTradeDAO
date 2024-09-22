@@ -6,7 +6,13 @@ import { OrderBook } from '../core/orderMatching';
 const app = express();
 const PORT = process.env.PORT || 3030;
 const orderbook = new OrderBook();
-app.use(cors());
+const optios: cors.CorsOptions = {
+    origin: "http://localhost:3000",
+    credentials: true
+}
+app.use(cors({
+    ...optios
+}));
 
 app.use(express.json());
 
