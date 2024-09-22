@@ -9,6 +9,10 @@ The cumulative trading volume of perpetual contracts since 2020 has exceeded $60
 
 ### Problems in Perpetual Markets
 
+
+<img src='./images/3.jpeg'>
+
+
 #### Open Order Books: Challenges
 1. **Front Running**: Visible pending orders allow traders to manipulate transaction ordering to their advantage.
 2. **Copy Trading Exploitation**: Competitors can duplicate visible strategies, profiting unfairly from others' trades.
@@ -23,11 +27,16 @@ The cumulative trading volume of perpetual contracts since 2020 has exceeded $60
 
 ### Stealth DAO: The Solution
 
+
+<img src='./images/2.jpeg'>
+
 **How We Solve These Issues:**
 - **Private Order Book System**: Implementing private order books enhanced by **access proofs** and **proof of solvency** to ensure transparency and foster user trust.
 - **Partial Public Data**: Some market data remains public to avoid a gambling-like environment, while the system's core operates in a decentralized, transparent manner.
 - **Chain Abstracted DAO**: A decentralized governance model allowing users to propose and vote on changes to the platform and perpetual contracts.
 - **Cross-Chain Voting**: Cross-chain voting ensures that all stakeholders have a say in the platform's evolution, enhancing trust and transparency.
 
+
+<img src='./images/1.jpeg'>
 
 For more Details <a href='https://stealthtradedao.gitbook.io/stealthtradedao'> read our exclusive docs</a>
